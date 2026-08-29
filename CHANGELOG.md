@@ -6,6 +6,12 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.19.1] - 2026-08-29
+
+### Fixed
+
+- CI archive secret scan no longer self-matches its own detection patterns.
+
 ## [0.19.0] - 2026-08-29
 
 ### Added
