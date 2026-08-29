@@ -28,7 +28,12 @@ jobs:
       - name: Verify archive does not contain prohibited material
         run: |
           unzip -l dist/wisprs-ai-connectors-v*.zip
-          ! unzip -p dist/wisprs-ai-connectors-v*.zip | grep -E 'BEGIN .*PRIVATE KEY|sk_(live|test)_'
+          # Scan every packaged file except the scanner itself and the package
+          # validator, whose secret-detection patterns would self-match.
+          scan_dir="$(mktemp -d)"
+          unzip -q dist/wisprs-ai-connectors-v*.zip -d "$scan_dir"
+          rm -f "$scan_dir/.github/workflows/validate.yml" "$scan_dir/scripts/validate-package.mjs"
+          ! grep -rEa 'BEGIN .*PRIVATE KEY|sk_(live|test)_' "$scan_dir"
       - name: Upload unsigned candidate
         uses: actions/upload-artifact@v4
         with:
