@@ -32,6 +32,6 @@ Retention, deletion, subprocessors, international transfers, account controls, a
 
 Privacy questions: `privacy@wisprs.co`  
 Security reports: `security@wisprs.co`  
-Product support: `support@wisprs.co`
+Product support: `tosh@getwisprs.com`
 
 This document explains the connector package and does not replace the service privacy policy.
