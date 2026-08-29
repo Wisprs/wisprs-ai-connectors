@@ -17,7 +17,7 @@ against `.claude-plugin/marketplace.json`.
 
 ## Server-side test suite
 
-`node --test src/lib/mcp/*.test.ts` in the app repo: 132 tests, 125 pass,
+The server-side MCP test suite in the application repository: 132 tests, 125 pass,
 0 fail, 7 skipped (integration tests gated on Postgres/Redis services; they run
 green in `.github/workflows/mcp-ci.yml`).
 
