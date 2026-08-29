@@ -2,22 +2,22 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "wisprs-ai-connectors-release@0.19.0",
-  "documentNamespace": "http://spdx.org/spdxdocs/wisprs-ai-connectors-release-0.19.0-2ffa09de-4003-44ec-b650-9a5a92f589c9",
+  "name": "wisprs-ai-connectors-release@0.19.1",
+  "documentNamespace": "http://spdx.org/spdxdocs/wisprs-ai-connectors-release-0.19.1-201a2f07-a4c8-4383-9c86-aa33a88af6c9",
   "creationInfo": {
-    "created": "2026-08-29T18:28:19.248Z",
+    "created": "2026-08-29T18:34:24.685Z",
     "creators": [
       "Tool: npm/cli-11.12.1"
     ]
   },
   "documentDescribes": [
-    "SPDXRef-Package-wisprs-ai-connectors-release-0.19.0"
+    "SPDXRef-Package-wisprs-ai-connectors-release-0.19.1"
   ],
   "packages": [
     {
       "name": "wisprs-ai-connectors-release",
-      "SPDXID": "SPDXRef-Package-wisprs-ai-connectors-release-0.19.0",
-      "versionInfo": "0.19.0",
+      "SPDXID": "SPDXRef-Package-wisprs-ai-connectors-release-0.19.1",
+      "versionInfo": "0.19.1",
       "packageFileName": "",
       "primaryPackagePurpose": "LIBRARY",
       "downloadLocation": "NOASSERTION",
@@ -28,7 +28,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/wisprs-ai-connectors-release@0.19.0"
+          "referenceLocator": "pkg:npm/wisprs-ai-connectors-release@0.19.1"
         }
       ]
     }
@@ -36,7 +36,7 @@
   "relationships": [
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
-      "relatedSpdxElement": "SPDXRef-Package-wisprs-ai-connectors-release-0.19.0",
+      "relatedSpdxElement": "SPDXRef-Package-wisprs-ai-connectors-release-0.19.1",
       "relationshipType": "DESCRIBES"
     }
   ]
