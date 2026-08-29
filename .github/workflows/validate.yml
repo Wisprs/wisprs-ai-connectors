@@ -1,0 +1,38 @@
+name: Validate distribution package
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Validate, test, and scan package
+        run: npm run validate
+      - name: Build deterministic release archive
+        run: npm run package
+      - name: Verify archive does not contain prohibited material
+        run: |
+          unzip -l dist/wisprs-ai-connectors-v*.zip
+          ! unzip -p dist/wisprs-ai-connectors-v*.zip | grep -E 'BEGIN .*PRIVATE KEY|sk_(live|test)_'
+      - name: Upload unsigned candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: wisprs-ai-connectors-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

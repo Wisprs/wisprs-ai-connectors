@@ -1,0 +1,15 @@
+{
+  "name": "wisprs-ai-connectors-release",
+  "version": "0.19.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "validate": "node scripts/validate-package.mjs && node scripts/check-links.mjs && npm test",
+    "validate:live-links": "node scripts/check-links.mjs --live",
+    "package": "node scripts/build-archive.mjs"
+  }
+}

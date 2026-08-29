@@ -1,0 +1,14 @@
+interface:
+  display_name: Wisprs
+  short_description: Transcribe media and retrieve transcripts.
+  icon_small: ./assets/wisprs-icon.png
+  icon_large: ./assets/wisprs-logo.png
+  brand_color: "#7C3AED"
+  default_prompt: Transcribe this public media URL with Wisprs and monitor it until completion.
+policy:
+  allow_implicit_invocation: true
+dependencies:
+  tools:
+    - transcribe_url
+    - get_job_status
+    - get_transcript

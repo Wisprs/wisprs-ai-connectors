@@ -1,0 +1,45 @@
+{
+  "name": "wisprs-ai-connectors",
+  "version": "0.19.0",
+  "description": "Transcribe, search, export, summarize, repurpose, and translate media through Wisprs.",
+  "author": {
+    "name": "Wisprs",
+    "email": "support@wisprs.co",
+    "url": "https://wisprs.co"
+  },
+  "homepage": "https://wisprs.co/mcp",
+  "repository": "https://github.com/Wisprs/wisprs-ai-connectors",
+  "license": "MIT",
+  "keywords": ["audio", "video", "transcription", "transcripts", "mcp"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wisprs",
+    "shortDescription": "Turn recordings into reusable content.",
+    "longDescription": "Transcribe public audio or video, search the connected library, export transcripts, and generate summaries, chapters, repurposed content, and translations through durable Wisprs operations.",
+    "developerName": "Wisprs",
+    "category": "Productivity",
+    "capabilities": [
+      "Transcription",
+      "Transcript retrieval",
+      "Semantic search",
+      "Transcript export",
+      "AI content transformation"
+    ],
+    "websiteURL": "https://wisprs.co",
+    "privacyPolicyURL": "https://wisprs.co/privacy",
+    "termsOfServiceURL": "https://wisprs.co/terms",
+    "brandColor": "#7C3AED",
+    "composerIcon": "./assets/wisprs-icon.png",
+    "logo": "./assets/wisprs-logo.png",
+    "defaultPrompt": [
+      "Transcribe this public media URL with Wisprs.",
+      "Help me securely upload a private recording to Wisprs.",
+      "Show me the text-to-speech voices available on my Wisprs plan.",
+      "Check the status of my Wisprs transcription.",
+      "Retrieve the completed transcript in pages.",
+      "Find where we discussed pricing in my Wisprs library.",
+      "Turn this transcript into show notes and a short thread."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

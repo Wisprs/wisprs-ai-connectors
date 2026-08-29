@@ -1,0 +1,29 @@
+{
+  "name": "wisprs-plugins",
+  "owner": {
+    "name": "Wisprs",
+    "email": "support@wisprs.co",
+    "url": "https://wisprs.co"
+  },
+  "description": "Official Wisprs plugins for Claude Code.",
+  "version": "0.19.0",
+  "plugins": [
+    {
+      "name": "wisprs-ai-connectors",
+      "displayName": "Wisprs",
+      "source": "./",
+      "description": "Transcribe, search, export, summarize, repurpose, and translate media through Wisprs.",
+      "version": "0.19.0",
+      "author": {
+        "name": "Wisprs",
+        "email": "support@wisprs.co",
+        "url": "https://wisprs.co"
+      },
+      "homepage": "https://wisprs.co/mcp",
+      "repository": "https://github.com/Wisprs/wisprs-ai-connectors",
+      "license": "MIT",
+      "category": "Productivity",
+      "tags": ["transcription", "audio", "video", "semantic-search", "content-repurposing"]
+    }
+  ]
+}
