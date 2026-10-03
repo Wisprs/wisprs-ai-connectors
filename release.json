@@ -1,19 +1,19 @@
 {
-  "packageVersion": "0.27.0",
+  "packageVersion": "0.28.0",
   "releaseStatus": "pre-submission",
   "publishedEvidence": [
     "2026-08-29-package-validation.md",
     "2026-08-29-public-repo-provenance.md",
     "2026-09-01-meeting-capture-write-verification.md"
   ],
-  "builtAt": "2026-10-03T15:52:09Z",
+  "builtAt": "2026-10-03T16:09:26Z",
   "server": {
     "endpoint": "https://wisprs.co/api/mcp",
     "claudeEndpoint": "https://wisprs.co/api/mcp/claude",
     "transport": "streamable-http",
     "authentication": "oauth-2.1",
-    "contractVersion": "1.15.0",
-    "contractSha256": "1c3c8fc886df2d5c6c96203232332d2f20bfe4c6271fb27d498b0ad00f8aa0e9"
+    "contractVersion": "1.16.0",
+    "contractSha256": "1069cfe513196223e5f74969d8919f5e3cb91c1f008615a359c6854bfae98bdf"
   },
   "supportedTools": [
     "transcribe_url",
