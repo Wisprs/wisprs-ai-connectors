@@ -6,15 +6,15 @@ Use only the dedicated reviewer account, synthetic media, and synthetic transcri
 
 1. Package commit and version match `release.json`.
 2. `npm run validate` and both host-native manifest validators pass.
-3. `https://wisprs.co/api/mcp` is healthy and returns OAuth protected-resource metadata when unauthenticated.
+3. The submitted endpoint is healthy and returns OAuth protected-resource metadata when unauthenticated: Claude uses `https://wisprs.co/api/mcp/claude`; OpenAI uses `https://wisprs.co/api/mcp`.
 4. Write tools are enabled for the reviewer tenant and its spend cap is intentionally small.
-5. The test media origin is public HTTPS, controlled by Wisprs, and contains no personal data.
+5. The test media origin is public HTTPS, controlled by Wisprs, and contains no personal data. Use the reviewer sample `https://wisprs.co/samples/wisprs-reviewer-sample.mp3` (22 seconds of synthetic English speech). Do not use music-only media such as the promo video: it completes with zero segments, which is correct but exercises nothing.
 
 ## Positive cases
 
 ### P1 — OAuth and discovery
 
-Connect the host to `https://wisprs.co/api/mcp`, complete browser authorization, and list tools. Expect the twenty-five release-supported tools and the private export resource template to be discoverable with accurate read/write/destructive metadata. No token appears in logs or UI.
+Connect the host to its submitted endpoint, complete browser authorization, and list tools. Expect 39 tools on Claude and 43 on OpenAI, plus the private export resource template. Every tool name must be <=64 characters and have a precise title and description. Pure reads use `readOnlyHint: true` and `destructiveHint: false`; tools that create, update, or delete data use `readOnlyHint: false` and `destructiveHint: true`, prompting before execution. Claude must not advertise or execute `list_tts_voices`, `synthesize_speech`, `list_tts_syntheses`, or `get_tts_audio`, including when directly called by name. The universal OpenAI endpoint retains them. Neither endpoint advertises or executes `get_video_transcript` (platform caption scraping). No token appears in logs or UI.
 
 ### P2 — Submit a transcription
 

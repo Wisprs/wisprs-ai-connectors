@@ -23,7 +23,7 @@ Wisprs will acknowledge a valid report within two business days, provide an init
 
 This package contains declarative manifests, documentation, assets, and one provider-neutral skill. It ships no executable hooks, installation scripts, embedded credentials, local `stdio` server, telemetry collector, or customer data. All sensitive processing occurs on the authenticated Wisprs service.
 
-The package points only to `https://wisprs.co/api/mcp`. OAuth credentials are obtained and stored by the host. Never add static authorization headers or secrets to `.mcp.json`.
+The Claude package points to `https://wisprs.co/api/mcp/claude`; the OpenAI/Codex package points to `https://wisprs.co/api/mcp`. OAuth credentials are obtained and stored by the host. Never add static authorization headers or secrets to either MCP configuration.
 
 ## Security guarantees expected from the service
 

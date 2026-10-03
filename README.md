@@ -1,14 +1,15 @@
 # Wisprs AI Connectors
 
-Official Wisprs distribution package for ChatGPT, Codex, Claude Code, and remote MCP clients. It connects each host to the same authenticated Streamable HTTP endpoint:
+Official Wisprs distribution package for ChatGPT, Codex, Claude Code, and remote MCP clients. The authenticated Streamable HTTP endpoints are:
 
-`https://wisprs.co/api/mcp`
+- Claude connector and plugin: `https://wisprs.co/api/mcp/claude` (STT and other non-TTS workflows; 39 tools).
+- ChatGPT, Codex, and other direct MCP clients: `https://wisprs.co/api/mcp` (universal surface; 43 tools, including TTS).
+- Browser setup guide: `https://wisprs.co/mcp/setup`.
 
-Release 0.9 supports the transcript, D24 library, and initial D25 TTS workflow:
+The Claude release supports transcript, library, meeting, creator, support, and developer workflows:
 
 - `transcribe_url` starts an asynchronous transcription from a public HTTPS media URL.
 - `get_private_media_upload_handoff` opens the authenticated Wisprs uploader for local or private media without sending file bytes or upload tokens through the model.
-- `list_tts_voices` returns the active standard or premium voices available to the connected plan.
 - `get_job_status` checks the durable operation without creating duplicate work.
 - `get_transcript` retrieves a completed transcript in bounded, cursor-based pages.
 - `get_transcript_artifact` retrieves generated content in bounded pages.
@@ -35,15 +36,15 @@ Or add the public repository as a marketplace after it is published:
 /plugin install wisprs-ai-connectors@wisprs-plugins
 ```
 
-Run `/mcp` to complete OAuth in the browser. Do not paste tokens into the repository, prompts, or configuration files.
+In Claude Code, run its `/mcp` command to complete OAuth in the browser. Do not paste tokens into the repository, prompts, or configuration files.
 
 ## Install for ChatGPT and Codex
 
-The `.codex-plugin/plugin.json` manifest is the universal package definition. During private testing, register `https://wisprs.co/api/mcp` in ChatGPT developer mode, then associate the resulting connection with this package. Public discovery requires separate OpenAI review; the presence of this package does not imply marketplace approval.
+The `.codex-plugin/plugin.json` manifest uses `.mcp-openai.json` and the universal endpoint. During private testing, register `https://wisprs.co/api/mcp` in ChatGPT developer mode, then associate the resulting connection with this package. Public discovery requires separate OpenAI review; the presence of this package does not imply marketplace approval.
 
 ## Direct MCP configuration
 
-Compatible hosts can use the checked-in `.mcp.json`. The server returns OAuth protected-resource metadata and drives browser authorization. Static bearer tokens are neither required nor accepted in this package.
+Claude hosts use the checked-in `.mcp.json`. Other hosts can use `.mcp-openai.json` for the universal endpoint. Each endpoint returns OAuth protected-resource metadata and drives browser authorization. Static bearer tokens are neither required nor accepted in this package.
 
 ## Correct asynchronous usage
 
@@ -76,7 +77,7 @@ Read [SECURITY.md](SECURITY.md) before reporting a vulnerability and [PRIVACY.md
 
 ## Release status
 
-Version `0.18.0` is a pre-submission package. No OpenAI or Anthropic approval is claimed. See [CHANGELOG.md](CHANGELOG.md) and [release.json](release.json) for compatibility and provenance.
+Version `0.26.0` is a pre-submission package. No OpenAI or Anthropic approval is claimed. See [CHANGELOG.md](CHANGELOG.md) and [release.json](release.json) for compatibility and provenance.
 
 ## License
 
