@@ -44,7 +44,7 @@ The source package uses `.mcp-openai.json` for the universal endpoint so OpenAI 
 2. Create a new MCP-backed plugin submission.
 3. Supply listing, country availability, policy attestations, server URL, authentication details, tool metadata, reviewer guide, and secure reviewer credentials.
 4. Complete domain verification exactly as the portal requests. Add a challenge only after the portal issues it, record it in the release evidence, and remove stale challenges after approval when allowed.
-5. Run the portal's MCP scan. Compare every discovered tool name, resource template, schema, annotation, scope, and description to contract `1.14.0` and the universal 43-tool release list.
+5. Run the portal's MCP scan. Compare every discovered tool name, resource template, schema, annotation, scope, and description to contract `1.15.0` and the universal 43-tool release list.
 6. Save as a draft and run the private review matrix again against the exact candidate.
 7. Submit only after all release gates in `SUBMISSION_GATES.md` are green.
 8. Record portal submission ID and timestamp outside this public repository. Monitor review, answer reviewer questions, and rerun affected tests after any change.

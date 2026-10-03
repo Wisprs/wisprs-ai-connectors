@@ -6,6 +6,13 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.27.0] - 2026-10-03
+
+### Changed
+
+- Server contract `1.15.0`. Six tool descriptions now state only what the tool does, with no references to other tools and no instructions to the model: `transcribe_url`, `get_job_status`, `get_transcript`, `list_transcripts`, `create_folder`, `create_support_ticket`. Tool names, input and output schemas, scopes and annotations are unchanged, so existing connections keep working.
+- Every tool now carries `annotations.title` (server-side), which directory checkers read in addition to the top-level title.
+
 ## [0.26.0] - 2026-10-03
 
 ### Fixed
