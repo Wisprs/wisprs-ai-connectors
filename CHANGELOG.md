@@ -6,6 +6,12 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.28.3] - 2026-10-03
+
+### Added
+
+- Claude plugin manifest: `displayName` ("Wisprs") and the directory listing fields `documentationUrl`, `supportUrl`, `privacyPolicyUrl` and `termsOfServiceUrl`, all documented in the Claude Code plugin manifest reference. The listing icon stays the default plugin-folder icon file.
+
 ## [0.28.2] - 2026-10-03
 
 ### Fixed
