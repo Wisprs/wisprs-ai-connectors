@@ -112,6 +112,7 @@ const SUPPORTED_TOOLS = [
 ];
 
 const REQUIRED_FILES = [
+  '.claude-plugin/icon.png',
   '.claude-plugin/marketplace.json',
   '.claude-plugin/plugin.json',
   '.codex-plugin/plugin.json',

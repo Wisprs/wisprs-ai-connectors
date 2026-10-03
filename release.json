@@ -1,12 +1,12 @@
 {
-  "packageVersion": "0.28.0",
+  "packageVersion": "0.28.1",
   "releaseStatus": "pre-submission",
   "publishedEvidence": [
     "2026-08-29-package-validation.md",
     "2026-08-29-public-repo-provenance.md",
     "2026-09-01-meeting-capture-write-verification.md"
   ],
-  "builtAt": "2026-10-03T16:09:26Z",
+  "builtAt": "2026-10-03T16:23:44Z",
   "server": {
     "endpoint": "https://wisprs.co/api/mcp",
     "claudeEndpoint": "https://wisprs.co/api/mcp/claude",

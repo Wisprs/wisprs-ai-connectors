@@ -77,7 +77,7 @@ Read [SECURITY.md](SECURITY.md) before reporting a vulnerability and [PRIVACY.md
 
 ## Release status
 
-Version `0.28.0` is a pre-submission package. No OpenAI or Anthropic approval is claimed. See [CHANGELOG.md](CHANGELOG.md) and [release.json](release.json) for compatibility and provenance.
+Version `0.28.1` is a pre-submission package. No OpenAI or Anthropic approval is claimed. See [CHANGELOG.md](CHANGELOG.md) and [release.json](release.json) for compatibility and provenance.
 
 ## License
 
