@@ -1,6 +1,6 @@
 {
   "name": "wisprs-ai-connectors",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "description": "Transcribe, search, export, summarize, repurpose, and translate media through Wisprs.",
   "author": {
     "name": "Wisprs",

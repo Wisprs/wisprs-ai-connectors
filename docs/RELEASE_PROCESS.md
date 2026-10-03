@@ -24,7 +24,7 @@ Use Semantic Versioning. Keep `package.json`, `release.json`, `.codex-plugin/plu
 
 ## Compatibility
 
-The public server contract is version `1.15.0`. Additive tools ship in a package minor release after host review. Breaking changes require a new contract major version, parallel server compatibility window, migration guide, and package major release.
+The public server contract is version `1.16.0`. Additive tools ship in a package minor release after host review. Breaking changes require a new contract major version, parallel server compatibility window, migration guide, and package major release.
 
 ## Emergency response
 

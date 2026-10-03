@@ -278,8 +278,8 @@ export async function validatePackage() {
     errors
   );
   invariant(
-    release.server?.contractVersion === '1.15.0',
-    'release contract version must be 1.15.0',
+    release.server?.contractVersion === '1.16.0',
+    'release contract version must be 1.16.0',
     errors
   );
   invariant(

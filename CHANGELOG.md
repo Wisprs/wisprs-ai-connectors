@@ -6,6 +6,12 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.28.0] - 2026-10-03
+
+### Changed
+
+- Server contract `1.16.0`. The tools that reach outside Wisprs name the API docs they use: `transcribe_url` links the transcription jobs API (https://wisprs.co/developer/docs/jobs), and `create_webhook_endpoint` and `update_webhook_endpoint` link the webhooks API (https://wisprs.co/developer/docs/webhooks). Names, schemas, scopes and annotations are unchanged.
+
 ## [0.27.0] - 2026-10-03
 
 ### Changed
