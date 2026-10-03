@@ -2,7 +2,7 @@
 
 Effective: 2026-08-23
 
-This repository is a client-side distribution package for the Wisprs service. Installing or inspecting it does not itself transmit data. When a user authorizes the MCP server and invokes a tool, the host sends the tool inputs to Wisprs at `https://wisprs.co/api/mcp`.
+This repository is a client-side distribution package for the Wisprs service. Installing or inspecting it does not itself transmit data. When a user authorizes an MCP server and invokes a tool, the host sends tool inputs to the configured Wisprs endpoint: Claude uses `https://wisprs.co/api/mcp/claude`, while ChatGPT and Codex use `https://wisprs.co/api/mcp`.
 
 ## Data handled by the service
 

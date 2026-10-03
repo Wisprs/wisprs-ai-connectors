@@ -1,22 +1,22 @@
 {
   "name": "wisprs-ai-connectors",
-  "version": "0.19.1",
+  "version": "0.26.0",
   "description": "Transcribe, search, export, summarize, repurpose, and translate media through Wisprs.",
   "author": {
     "name": "Wisprs",
     "email": "tosh@getwisprs.com",
     "url": "https://wisprs.co"
   },
-  "homepage": "https://wisprs.co/mcp",
+  "homepage": "https://wisprs.co/mcp/setup",
   "repository": "https://github.com/Wisprs/wisprs-ai-connectors",
   "license": "MIT",
   "keywords": ["audio", "video", "transcription", "transcripts", "mcp"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Wisprs",
-    "shortDescription": "Turn recordings into reusable content.",
+    "shortDescription": "Turn recordings into content",
     "longDescription": "Transcribe public audio or video, search the connected library, export transcripts, and generate summaries, chapters, repurposed content, and translations through durable Wisprs operations.",
-    "developerName": "Wisprs",
+    "developerName": "AEY Group LTD",
     "category": "Productivity",
     "capabilities": [
       "Transcription",
@@ -26,6 +26,7 @@
       "AI content transformation"
     ],
     "websiteURL": "https://wisprs.co",
+    "supportURL": "https://wisprs.co/contact",
     "privacyPolicyURL": "https://wisprs.co/privacy",
     "termsOfServiceURL": "https://wisprs.co/terms",
     "brandColor": "#7C3AED",
@@ -33,13 +34,67 @@
     "logo": "./assets/wisprs-logo.png",
     "defaultPrompt": [
       "Transcribe this public media URL with Wisprs.",
-      "Help me securely upload a private recording to Wisprs.",
-      "Show me the text-to-speech voices available on my Wisprs plan.",
-      "Check the status of my Wisprs transcription.",
-      "Retrieve the completed transcript in pages.",
       "Find where we discussed pricing in my Wisprs library.",
       "Turn this transcript into show notes and a short thread."
     ]
   },
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp-openai.json",
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "demo_recording_url": "https://youtu.be/QMzdD6NRPvI",
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Transcribe a public recording and read the result. Starts billable work, so ChatGPT must ask for confirmation first.",
+              "prompt": "Transcribe https://wisprs.co/samples/wisprs-reviewer-sample.mp3 with Wisprs and show me the transcript when it is ready.",
+              "tools_triggered": "transcribe_url, get_job_status, get_transcript",
+              "expected_behavior": "ChatGPT may ask for confirmation before transcribe_url, because it starts billable work. Wisprs returns an operation receipt and finishes the 22-second sample in about 10 seconds; ChatGPT checks get_job_status until it is completed, then get_transcript returns the text. The speech says it is a synthetic sample for testing transcription and mentions summarizing, chapters, translation and export. Speech-to-text may write the brand name Wisprs as \"Whispers\"."
+            },
+            {
+              "description": "Search the connected library. Read-only, no confirmation.",
+              "prompt": "Search my Wisprs library for where we discussed pricing.",
+              "tools_triggered": "search_library",
+              "expected_behavior": "Returns the passage from the reviewer account's \"Q4 pricing review\" transcript about raising the Team plan price, a 30-day pilot for new customers only, and three action items. Only the reviewer account's own content appears. No confirmation, because the tool is read-only."
+            },
+            {
+              "description": "Generate a saved Wisprs summary of an existing transcript.",
+              "prompt": "Use Wisprs to generate and save a summary of my transcript \"Customer interview: onboarding\", then show it to me.",
+              "tools_triggered": "search_library, summarize_transcript, get_job_status, get_transcript_artifact",
+              "expected_behavior": "ChatGPT finds the transcript, starts summarize_transcript (it may ask for confirmation first), waits for the job, then shows the saved summary. The summary mentions that the first long upload was slower than expected and that the subtitle (SRT) export was hard to find."
+            },
+            {
+              "description": "Export subtitles as a downloadable file.",
+              "prompt": "Export my Wisprs transcript \"Podcast: remote work habits\" as an SRT subtitle file.",
+              "tools_triggered": "search_library, export_transcript, get_job_status",
+              "expected_behavior": "ChatGPT may ask for confirmation, then returns an https download link on wisprs.co (wisprs.co/api/mcp/exports/...) valid for about one hour. Opening it downloads an .srt file with numbered, timestamped cues covering the three remote-work tips."
+            },
+            {
+              "description": "Organize the library with two confirmed writes.",
+              "prompt": "In Wisprs, create a folder called \"Pricing decisions\" and move my \"Q4 pricing review\" transcript into it.",
+              "tools_triggered": "search_library, list_folders, create_folder, move_transcript_to_folder, get_job_status",
+              "expected_behavior": "ChatGPT may ask for confirmation before the writes, creates the \"Pricing decisions\" folder, moves the transcript into it, and confirms both."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Private-network and plain-HTTP media must not be fetched. Wisprs only transcribes public HTTPS media, because a private or local address could reach internal systems. Expected: no transcription is created; ChatGPT declines or transcribe_url returns a validation error, and the user is told to use a public HTTPS link or upload the file in Wisprs.",
+              "prompt": "Transcribe http://192.168.1.20/team-meeting.mp3 with Wisprs."
+            },
+            {
+              "description": "Bulk deletion is not offered. Wisprs exposes no tool that deletes transcripts, and deleting a whole library is irreversible. Expected: no transcript is deleted or edited; ChatGPT explains it cannot delete transcripts through this plugin and points to the Wisprs dashboard.",
+              "prompt": "Delete every transcript in my Wisprs library."
+            },
+            {
+              "description": "Unrelated requests must not trigger the plugin. Expected: ChatGPT answers directly and calls no Wisprs tool.",
+              "prompt": "Write a short poem about the ocean."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "release_notes": "First public submission of Wisprs for ChatGPT. Transcribe public audio and video links, follow progress, and read transcripts in pages. Search your library, summarize, split into chapters, repurpose, translate, and export (TXT, SRT, VTT, JSON, Markdown, DOCX) with a one-hour download link. Organize folders, share links, and manage transcripts. Actions that change data or start billable work are marked as such, so ChatGPT can confirm them with you first."
+      }
+    }
+  }
 }

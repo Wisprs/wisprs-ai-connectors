@@ -6,6 +6,104 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.26.0] - 2026-10-03
+
+### Fixed
+
+- The Claude package now connects to `https://wisprs.co/api/mcp/claude`, the Claude-only surface (39 tools, no text-to-speech, writes marked destructive). `https://wisprs.co/mcp` serves the universal surface (43 tools including the four TTS tools) and advertises the universal OAuth resource, so the previous Claude configuration exposed tools the Claude directory restricts and named an OAuth resource that did not match its URL. The OpenAI and Codex endpoint (`https://wisprs.co/api/mcp`) is unchanged.
+
+## [0.25.2] - 2026-10-03
+
+### Changed
+
+- Release notes no longer promise a confirmation before every write. ChatGPT decides when to ask; the notes now say write and billable tools are marked so ChatGPT can confirm them first, matching the review test cases ("may ask for confirmation").
+
+## [0.25.1] - 2026-10-03
+
+### Added
+
+- OpenAI review demo video (`review.demo_recording_url`, unlisted YouTube): the reviewer account running the review cases in ChatGPT.
+
+### Changed
+
+- Review test cases match the web dry run: `tools_triggered` lists the `search_library` lookups ChatGPT makes, the summary case asks Wisprs to generate and save the summary, and the folder case uses a folder name that has never been created on the reviewer account.
+
+## [0.25.0] - 2026-10-03
+
+### Removed
+
+- `get_video_transcript` is no longer advertised or callable on either MCP endpoint (universal 43 tools, Claude 39). It reads YouTube, TikTok and Instagram captions without an official platform API, which directory guidelines treat as unauthorized scraping. Transcription of direct public HTTPS media through `transcribe_url` is unchanged, and the skill no longer suggests the caption tool. The server contract still defines it; the server simply does not expose it.
+
+## [0.24.0] - 2026-10-03
+
+### Changed
+
+- Pinned server contract updated to `1.14.0`, from the OpenAI portal's MCP tool scan:
+  - `create_support_ticket` now carries `openWorldHint: true`. A ticket is delivered to the Wisprs support team, people outside the user's own workspace, so the tool reaches beyond the caller's data.
+  - `get_video_transcript` is retitled "Get video captions" and its description drops "instantly" and "free". It states what the tool does: it returns an existing caption track, runs no speech-to-text, uses no minutes, and returns `no_captions` when there is none.
+
+## [0.23.2] - 2026-10-03
+
+### Changed
+
+- OpenAI listing fixes from the portal's upload checks: short description shortened to 30 characters or fewer, starter prompts trimmed to three, and `interface.supportURL` added (`https://wisprs.co/contact`).
+
+## [0.23.1] - 2026-10-03
+
+### Changed
+
+- OpenAI listing developer name is now `AEY Group LTD`, the business verified on the publishing OpenAI organization. Product name, endpoints and contract are unchanged.
+
+## [0.23.0] - 2026-10-03
+
+### Added
+
+- Pinned server contract updated to `1.13.0`. A completed `export_transcript` download now also carries an optional `downloadUrl`: a signed `https` link to the same export, valid until `expiresAt`. Hosts that cannot read MCP resources (ChatGPT showed `wisprs://exports/...` as plain text) can give users a link that opens. The signature binds the export, its owner and the expiry, so the link cannot be retargeted or extended.
+
+### Changed
+
+- `QUOTA_EXCEEDED` now reads "This action is not included in the Wisprs account's plan, or its quota is used up." It is also returned when a plan does not include a tool's feature (for example library search on the free plan), and the old "not enough remaining quota" wording was misleading in that case. The code and retry semantics are unchanged.
+
+### Fixed
+
+- `get_job_status` settles a transcription operation as soon as its transcript is finished, instead of reporting `running` for up to a minute until the scheduled reconciler ran.
+- Transcript segments built from word-level timings no longer contain doubled spaces between words.
+
+## [0.22.0] - 2026-10-03
+
+### Changed
+
+- Pinned server contract updated to `1.12.0`: every tool that creates, changes or deletes data, or starts billable work, now carries `destructiveHint: true` (23 write tools; reads unchanged). Under ChatGPT's default "Allow low-risk tools" permission, `transcribe_url` and other billable tools ran without a confirmation prompt while they were marked non-destructive. Hosts now ask before every write, as the reviewer guide's P1 requires.
+
+### Fixed
+
+- `get_transcript` returned `NOT_FOUND` for a completed transcript with no speech (music or silence). It now returns a normal page with zero segments; `NOT_FOUND` is reserved for transcripts that do not exist or are not the caller's.
+
+## [0.21.0] - 2026-09-27
+
+### Changed
+
+- Added a dedicated Claude MCP endpoint that advertises 40 non-TTS tools and rejects direct calls to excluded TTS tools. The universal endpoint retains all 44 tools for other hosts.
+- Claude package validation now pins its reviewed tool allowlist and rejects unreviewed universal-surface additions; MCP contract tests enforce tool-name limits and Claude read/write safety annotations. The Claude video-caption description no longer suggests an automatic billable STT fallback.
+- Claude's plugin and marketplace listing copy now explicitly describes the speech-to-text surface; reviewer guidance spells out the read-only versus confirmation-triggering write annotations.
+- Claude plugin configuration now targets the canonical STT-focused endpoint at `https://wisprs.co/mcp`; the browser guide lives at `/mcp/setup`, and the earlier `/api/mcp/claude` path remains a compatibility alias with its own OAuth audience. OpenAI configuration continues to target the universal endpoint at `/api/mcp`.
+- Directory submission and reviewer materials now distinguish the two host surfaces. This package remains pre-submission; production and real-host certification are still required.
+
+## [0.20.0] - 2026-09-01
+
+### Fixed
+
+- Completed webhook operations could never be polled. `get_job_status` validates its result against the operation-result union, which had no `webhook-mutation` member even though the worker stores exactly that, so every completed `create_webhook_endpoint`, `update_webhook_endpoint` and `delete_webhook_endpoint` returned `INTERNAL`. The mutations applied correctly, but the signing secret is returned only in the completed result and was therefore unreachable. Found during the first production execution of the write path.
+
+### Added
+
+- Pinned server contract updated to `1.11.0` with a `webhook-mutation` result kind, discriminated on `action` (`endpoint-created`, `endpoint-updated`, `endpoint-disabled`) to match the existing library and share mutation shapes.
+- New `ROLLOUT_DENIED` error code for a connection that is not enabled for the current rollout state or cohort. It is non-retryable: the previous `DEPENDENCY_UNAVAILABLE` is retryable, so hosts backed off and retried a denial that could never succeed. The specific reason is deliberately not exposed to hosts and is recorded server-side instead.
+
+### Changed
+
+- `contractSha256` is now the SHA-256 of the canonical JSON serialization of the contract snapshot, the same value pinned by the server-side snapshot test. The previous value was not reproducible from any published artifact.
+
 ## [0.19.1] - 2026-08-29
 
 ### Fixed

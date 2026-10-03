@@ -1,13 +1,13 @@
 {
   "name": "wisprs-ai-connectors",
-  "description": "Transcribe, search, export, summarize, repurpose, and translate media through Wisprs.",
-  "version": "0.19.1",
+  "description": "Speech-to-text transcription, transcript search and library management, summaries, exports, translations, and creator content with Wisprs.",
+  "version": "0.26.0",
   "author": {
     "name": "Wisprs",
     "email": "tosh@getwisprs.com",
     "url": "https://wisprs.co"
   },
-  "homepage": "https://wisprs.co/mcp",
+  "homepage": "https://wisprs.co/mcp/setup",
   "repository": "https://github.com/Wisprs/wisprs-ai-connectors",
   "license": "MIT",
   "keywords": ["audio", "video", "transcription", "transcripts", "mcp"],
