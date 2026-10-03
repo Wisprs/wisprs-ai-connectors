@@ -6,6 +6,12 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.28.1] - 2026-10-03
+
+### Added
+
+- Claude plugin icon (`.claude-plugin/icon.png`, 512x512 Wisprs mark) and explicit `privacyPolicyUrl` in `.claude-plugin/plugin.json`, as the Claude directory checks expect.
+
 ## [0.28.0] - 2026-10-03
 
 ### Changed
