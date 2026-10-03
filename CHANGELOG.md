@@ -6,11 +6,17 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.28.2] - 2026-10-03
+
+### Fixed
+
+- Removed `icon` and `privacyPolicyUrl` from `.claude-plugin/plugin.json`; the Claude directory flags both as unrecognized. The icon file stays in the plugin folder, and the privacy policy URL is taken from the README.
+
 ## [0.28.1] - 2026-10-03
 
 ### Added
 
-- Claude plugin icon (`.claude-plugin/icon.png`, 512x512 Wisprs mark) and explicit `privacyPolicyUrl` in `.claude-plugin/plugin.json`, as the Claude directory checks expect.
+- Claude plugin icon: a 512x512 Wisprs mark in the plugin folder, which the Claude directory reads as the listing icon. (An explicit `icon` and `privacyPolicyUrl` in the manifest were tried and removed in 0.28.2: the directory treats them as unrecognized fields.)
 
 ## [0.28.0] - 2026-10-03
 

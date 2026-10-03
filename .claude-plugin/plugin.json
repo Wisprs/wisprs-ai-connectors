@@ -1,7 +1,7 @@
 {
   "name": "wisprs-ai-connectors",
   "description": "Speech-to-text transcription, transcript search and library management, summaries, exports, translations, and creator content with Wisprs.",
-  "version": "0.28.1",
+  "version": "0.28.2",
   "author": {
     "name": "Wisprs",
     "email": "tosh@getwisprs.com",
@@ -10,8 +10,6 @@
   "homepage": "https://wisprs.co/mcp/setup",
   "repository": "https://github.com/Wisprs/wisprs-ai-connectors",
   "license": "MIT",
-  "privacyPolicyUrl": "https://wisprs.co/privacy",
-  "icon": "./.claude-plugin/icon.png",
   "keywords": ["audio", "video", "transcription", "transcripts", "mcp"],
   "mcpServers": "./.mcp.json"
 }
