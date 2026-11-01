@@ -14,6 +14,7 @@ All notable package changes are documented here. Versions follow Semantic Versio
 - Inline transcript component `ui://wisprs/transcript-v2.html` (`text/html;profile=mcp-app`), rendered by `transcribe_url`, `transcribe_file` and `get_transcript` through `openai/outputTemplate`. It polls `get_job_status` from inside the conversation (both it and `get_transcript` are `openai/widgetAccessible`), persists its state, and shows the finished transcript with copy, load-more and expand. It never calls `sendFollowUpMessage`.
 - `openai/toolInvocation/invoking` and `invoked` strings on every ChatGPT tool.
 - Onboarding skill `skills/setup/SKILL.md`, referenced from `extensions.com.openai.onboardingSkill`.
+- Grok Build manifest `.grok-plugin/plugin.json` with `.mcp-grok.json`, which points Grok at the universal endpoint `https://wisprs.co/api/mcp` (the root `.mcp.json` stays on the Claude surface).
 
 ### Changed
 

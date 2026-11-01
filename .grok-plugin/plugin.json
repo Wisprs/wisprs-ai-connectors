@@ -1,0 +1,14 @@
+{
+  "name": "wisprs",
+  "version": "0.30.0",
+  "description": "Transcribe audio, video and YouTube links from Grok Build, then search, summarize, translate and export transcripts through Wisprs' hosted OAuth MCP server.",
+  "author": {
+    "name": "Wisprs",
+    "url": "https://wisprs.co"
+  },
+  "repository": "https://github.com/Wisprs/wisprs-ai-connectors",
+  "homepage": "https://wisprs.co/mcp/setup",
+  "license": "MIT",
+  "keywords": ["wisprs", "wisprs-transcript", "wisprs-mcp"],
+  "mcpServers": "./.mcp-grok.json"
+}

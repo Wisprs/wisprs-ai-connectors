@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wisprs": {
+      "type": "http",
+      "url": "https://wisprs.co/api/mcp"
+    }
+  }
+}
