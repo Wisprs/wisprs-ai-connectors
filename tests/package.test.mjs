@@ -33,7 +33,14 @@ test('Claude listing copy is explicitly speech-to-text focused', async () => {
 test('OpenAI retains the universal MCP endpoint with TTS available', async () => {
   const mcp = JSON.parse(await readFile(join(ROOT, '.mcp-openai.json'), 'utf8'));
   assert.deepEqual(mcp, {
-    mcpServers: { wisprs: { type: 'http', url: 'https://wisprs.co/api/mcp' } },
+    mcpServers: {
+      wisprs: {
+        type: 'http',
+        url: 'https://wisprs.co/api/mcp',
+        // Codex/ChatGPT read sign-in settings from here; DCR, never packaged credentials.
+        extensions: { 'com.openai': { auth: { type: 'oauth', client: { mode: 'dcr' } } } },
+      },
+    },
   });
   const release = JSON.parse(await readFile(join(ROOT, 'release.json'), 'utf8'));
   assert.ok(release.supportedTools.includes('synthesize_speech'));

@@ -21,14 +21,14 @@ OpenAI publishes one universal plugin entry shared by ChatGPT and Codex. This pa
 5. Add `"apps": "./.app.json"` to the release-candidate Codex manifest and rerun validation.
 6. Install from the private source and run every case in `REVIEWER_GUIDE.md` in both ChatGPT and Codex.
 
-The source package uses `.mcp-openai.json` for the universal endpoint so OpenAI retains the complete toolset, including TTS. Claude uses `.mcp.json` and its separately constrained endpoint. The OpenAI portal receives the MCP server as a fresh server-backed plugin submission.
+The source package uses `.mcp-openai.json` for `https://wisprs.co/api/mcp`. Since 0.29.x the server recognises ChatGPT and Codex by their user agent and lists them a lean 23-tool set (`release.json` `openaiSupportedTools`: transcription, library, transform, export, folders, share; no TTS, webhooks, meetings, support, notifications or creator packs). ChatGPT alone also sees `transcribe_file` (attached files through `openai/fileParams`) and the inline transcript component `ui://wisprs/transcript-v2.html`. Claude uses `.mcp.json` and its separately constrained endpoint. The OpenAI portal receives the MCP server as a fresh server-backed plugin submission.
 
 ## Listing materials
 
 - Name: `Wisprs`
 - Category: `Productivity`
-- Short description: `Transcribe media and retrieve transcripts.`
-- Long description: `Turn a public HTTPS audio or video URL into a durable Wisprs transcription job, check progress, and retrieve the completed transcript in bounded pages.`
+- Short description: `Turn recordings into content` (plugin); skill card: `Transcribe, search, and reuse recordings.` (`skills/wisprs/agents/openai.yaml`)
+- Long description: `interface.longDescription` in `.codex-plugin/plugin.json` (attached recordings and public links, transcript in the conversation, then library search, export and AI transforms)
 - Website: `https://wisprs.co`
 - Support: `https://wisprs.co/contact`
 - Privacy: `https://wisprs.co/privacy`
@@ -44,7 +44,7 @@ The source package uses `.mcp-openai.json` for the universal endpoint so OpenAI 
 2. Create a new MCP-backed plugin submission.
 3. Supply listing, country availability, policy attestations, server URL, authentication details, tool metadata, reviewer guide, and secure reviewer credentials.
 4. Complete domain verification exactly as the portal requests. Add a challenge only after the portal issues it, record it in the release evidence, and remove stale challenges after approval when allowed.
-5. Run the portal's MCP scan. Compare every discovered tool name, resource template, schema, annotation, scope, and description to contract `1.16.0` and the universal 43-tool release list.
+5. Run the portal's MCP scan. Compare every discovered tool name, resource template, schema, annotation, scope, and description to contract `1.17.0` and `release.json` `openaiSupportedTools` (23 tools, including `transcribe_file`).
 6. Save as a draft and run the private review matrix again against the exact candidate.
 7. Submit only after all release gates in `SUBMISSION_GATES.md` are green.
 8. Record portal submission ID and timestamp outside this public repository. Monitor review, answer reviewer questions, and rerun affected tests after any change.

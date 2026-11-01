@@ -2,7 +2,17 @@
   "mcpServers": {
     "wisprs": {
       "type": "http",
-      "url": "https://wisprs.co/api/mcp"
+      "url": "https://wisprs.co/api/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "dcr"
+            }
+          }
+        }
+      }
     }
   }
 }

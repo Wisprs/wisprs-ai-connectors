@@ -260,12 +260,28 @@ export async function validatePackage() {
     'release universal endpoint must match OpenAI config',
     errors
   );
+  // OpenAI reads sign-in settings from the plugin's MCP config (extensions["com.openai"].auth,
+  // "Package your plugin" + "Submit your plugin" docs). Without them Codex treats the server as
+  // unauthenticated and loops on 401s. Only DCR is declared: Clerk exposes a registration
+  // endpoint through discovery, and the manifest must never carry client credentials.
+  const openaiServer = openaiMcp.mcpServers?.wisprs;
+  const openaiAuth = openaiServer?.extensions?.['com.openai']?.auth;
   invariant(
-    openaiMcp.mcpServers?.wisprs?.type === 'http' &&
-      openaiMcp.mcpServers?.wisprs?.url === ENDPOINT &&
+    openaiServer?.type === 'http' &&
+      openaiServer?.url === ENDPOINT &&
       Object.keys(openaiMcp.mcpServers ?? {}).length === 1 &&
-      Object.keys(openaiMcp.mcpServers.wisprs).every((key) => ['type', 'url'].includes(key)),
-    'OpenAI config must contain only the canonical HTTPS endpoint',
+      Object.keys(openaiServer).every((key) => ['type', 'url', 'extensions'].includes(key)),
+    'OpenAI config must contain only the canonical HTTPS endpoint and its auth extension',
+    errors
+  );
+  invariant(
+    openaiAuth?.type === 'oauth' &&
+      openaiAuth?.client?.mode === 'dcr' &&
+      Object.keys(openaiAuth.client).length === 1 &&
+      Object.keys(openaiAuth).every((key) => ['type', 'client'].includes(key)) &&
+      Object.keys(openaiServer.extensions).length === 1 &&
+      Object.keys(openaiServer.extensions['com.openai']).length === 1,
+    'OpenAI config must declare OAuth with DCR and no client credentials',
     errors
   );
   invariant(
@@ -279,8 +295,8 @@ export async function validatePackage() {
     errors
   );
   invariant(
-    release.server?.contractVersion === '1.16.0',
-    'release contract version must be 1.16.0',
+    release.server?.contractVersion === '1.17.0',
+    'release contract version must be 1.17.0',
     errors
   );
   invariant(
