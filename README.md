@@ -1,10 +1,15 @@
 # Wisprs AI Connectors
 
-Official Wisprs distribution package for ChatGPT, Codex, Claude Code, and remote MCP clients. The authenticated Streamable HTTP endpoints are:
+Official Wisprs distribution package for ChatGPT, Codex, Claude Code, and remote MCP clients. Wisprs is a hosted remote MCP server: transcribe audio, video and public media links, then search, summarize, translate and export the transcripts. This repository holds the client configuration, plugin manifests and skills; the server itself runs at wisprs.co.
 
+The authenticated Streamable HTTP endpoints (OAuth 2.1) are:
+
+- ChatGPT: `https://wisprs.co/api/mcp` (23 tools, including `transcribe_file` for files attached in the chat and an inline transcript card).
 - Claude connector and plugin: `https://wisprs.co/api/mcp/claude` (STT and other non-TTS workflows; 39 tools).
-- ChatGPT, Codex, and other direct MCP clients: `https://wisprs.co/api/mcp` (universal surface; 43 tools, including TTS).
+- Codex and other direct MCP clients: `https://wisprs.co/api/mcp` (universal surface; 43 tools, including TTS).
 - Browser setup guide: `https://wisprs.co/mcp/setup`.
+
+Listed in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=co.wisprs) as `co.wisprs/wisprs` (see [server.json](server.json)).
 
 The Claude release supports transcript, library, meeting, creator, support, and developer workflows:
 
@@ -29,7 +34,7 @@ Test a local checkout:
 claude --plugin-dir ./wisprs-ai-connectors
 ```
 
-Or add the public repository as a marketplace after it is published:
+Or add this repository as a marketplace:
 
 ```text
 /plugin marketplace add Wisprs/wisprs-ai-connectors
@@ -40,7 +45,9 @@ In Claude Code, run its `/mcp` command to complete OAuth in the browser. Do not 
 
 ## Install for ChatGPT and Codex
 
-The `.codex-plugin/plugin.json` manifest uses `.mcp-openai.json` and the universal endpoint. During private testing, register `https://wisprs.co/api/mcp` in ChatGPT developer mode, then associate the resulting connection with this package. Public discovery requires separate OpenAI review; the presence of this package does not imply marketplace approval.
+Wisprs is published in ChatGPT's app directory: search for Wisprs, connect, and sign in. Attach a recording or paste a link and ask for a transcript; the transcript card shows progress and the finished text in the chat.
+
+The `.codex-plugin/plugin.json` manifest uses `.mcp-openai.json` and the universal endpoint for Codex. Any other MCP client can connect to `https://wisprs.co/api/mcp` directly and complete OAuth in the browser.
 
 ## Direct MCP configuration
 
@@ -77,7 +84,7 @@ Read [SECURITY.md](SECURITY.md) before reporting a vulnerability and [PRIVACY.md
 
 ## Release status
 
-Version `0.28.3` is a pre-submission package. No OpenAI or Anthropic approval is claimed. See [CHANGELOG.md](CHANGELOG.md) and [release.json](release.json) for compatibility and provenance.
+Version `0.30.0`. Published in ChatGPT's app directory and the official MCP Registry; the Claude directory listing is in review. See [CHANGELOG.md](CHANGELOG.md) and [release.json](release.json) for compatibility and provenance.
 
 ## License
 

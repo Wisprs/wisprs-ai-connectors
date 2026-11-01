@@ -6,6 +6,35 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.30.0] - 2026-10-30
+
+### Added
+
+- `transcribe_file` (ChatGPT only): accepts a file the user attached to the chat, declared through `_meta["openai/fileParams"]` with the Apps SDK file object (`download_url`, `file_id`, `mime_type`, `file_name`). Private recordings no longer need the website hand-off. Contract 1.17.0.
+- Inline transcript component `ui://wisprs/transcript-v2.html` (`text/html;profile=mcp-app`), rendered by `transcribe_url`, `transcribe_file` and `get_transcript` through `openai/outputTemplate`. It polls `get_job_status` from inside the conversation (both it and `get_transcript` are `openai/widgetAccessible`), persists its state, and shows the finished transcript with copy, load-more and expand. It never calls `sendFollowUpMessage`.
+- `openai/toolInvocation/invoking` and `invoked` strings on every ChatGPT tool.
+- Onboarding skill `skills/setup/SKILL.md`, referenced from `extensions.com.openai.onboardingSkill`.
+
+### Changed
+
+- `get_job_status` holds its read open for up to 30 s (was 8 s) and, for a job that is still open, adds a plain-language line telling the model to say so and check again later; `retryAfterSeconds` is 10 (queued) or 20 (running).
+- The upload hand-off page tells the user it is uploading for the chat and sends them back to it after the upload instead of into the dashboard; the tool's `continuation` text says the same.
+- `skills/wisprs/SKILL.md` is organised around the 23 tools ChatGPT lists, with the Claude-only extras in a closing section; it names `transcribe_file` as the first choice for attachments.
+- Starter prompt 2 transcribes an attached recording. Review case 5 (folders) is replaced by an attached-file case.
+- `release.json`: `releaseStatus` published, `openaiSupportedTools` and `openaiComponentResources` added.
+
+## [0.29.1] - 2026-10-29
+
+### Changed
+
+- Starter prompts (`interface.defaultPrompt`) now work for a brand-new account. The old three needed a URL the user had to find or an existing library: a new user's first click got a question back or an empty result. The new ones transcribe a 32-second public sample on wisprs.co, start a file upload, and list recent transcripts (useful even when the library is empty).
+
+## [0.29.0] - 2026-10-28
+
+### Fixed
+
+- OpenAI/Codex MCP config now declares sign-in: `extensions["com.openai"].auth` with `type: "oauth"` and `client.mode: "dcr"` (OpenAI "Package your plugin" and "Submit your plugin" docs). Without it Codex connected without a token and every call failed with 401; Wisprs' authorization server advertises its registration endpoint through discovery, so no URL override or client credentials are packaged.
+
 ## [0.28.3] - 2026-10-03
 
 ### Added

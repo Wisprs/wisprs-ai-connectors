@@ -1,7 +1,7 @@
 {
   "name": "wisprs-ai-connectors",
-  "version": "0.28.3",
-  "description": "Transcribe, search, export, summarize, repurpose, and translate media through Wisprs.",
+  "version": "0.30.0",
+  "description": "Transcribe attached recordings and public links, then search, export, summarize, repurpose, and translate them through Wisprs.",
   "author": {
     "name": "Wisprs",
     "email": "tosh@getwisprs.com",
@@ -15,7 +15,7 @@
   "interface": {
     "displayName": "Wisprs",
     "shortDescription": "Turn recordings into content",
-    "longDescription": "Transcribe public audio or video, search the connected library, export transcripts, and generate summaries, chapters, repurposed content, and translations through durable Wisprs operations.",
+    "longDescription": "Attach a recording or paste a public audio or video link and get the transcript right in the conversation, then search the connected library, export transcripts, and generate summaries, chapters, repurposed content, and translations through durable Wisprs operations.",
     "developerName": "AEY Group LTD",
     "category": "Productivity",
     "capabilities": [
@@ -33,14 +33,15 @@
     "composerIcon": "./assets/wisprs-icon.png",
     "logo": "./assets/wisprs-logo.png",
     "defaultPrompt": [
-      "Transcribe this public media URL with Wisprs.",
-      "Find where we discussed pricing in my Wisprs library.",
-      "Turn this transcript into show notes and a short thread."
+      "Transcribe this sample podcast with Wisprs: https://wisprs.co/samples/wisprs-sample-remote-work-podcast.mp3",
+      "Transcribe the recording I attached with Wisprs.",
+      "Show my recent Wisprs transcripts and what I can do with them."
     ]
   },
   "mcpServers": "./.mcp-openai.json",
   "extensions": {
     "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md",
       "review": {
         "demo_recording_url": "https://youtu.be/QMzdD6NRPvI",
         "test_cases": {
@@ -49,7 +50,13 @@
               "description": "Transcribe a public recording and read the result. Starts billable work, so ChatGPT must ask for confirmation first.",
               "prompt": "Transcribe https://wisprs.co/samples/wisprs-reviewer-sample.mp3 with Wisprs and show me the transcript when it is ready.",
               "tools_triggered": "transcribe_url, get_job_status, get_transcript",
-              "expected_behavior": "ChatGPT may ask for confirmation before transcribe_url, because it starts billable work. Wisprs returns an operation receipt and finishes the 22-second sample in about 10 seconds; ChatGPT checks get_job_status until it is completed, then get_transcript returns the text. The speech says it is a synthetic sample for testing transcription and mentions summarizing, chapters, translation and export. Speech-to-text may write the brand name Wisprs as \"Whispers\"."
+              "expected_behavior": "ChatGPT may ask for confirmation before transcribe_url, because it starts billable work. Wisprs returns an operation receipt and renders the Wisprs transcript component inline; the component checks the job itself and shows the transcript when it completes (the 22-second sample finishes in about 10 seconds). ChatGPT may also call get_job_status and get_transcript to read the text into the conversation. The speech says it is a synthetic sample for testing transcription and mentions summarizing, chapters, translation and export. Speech-to-text may write the brand name Wisprs as \"Whispers\"."
+            },
+            {
+              "description": "Transcribe a file attached to the chat without leaving ChatGPT. Starts billable work, so ChatGPT must ask for confirmation first.",
+              "prompt": "[Attach any short audio file, for example https://wisprs.co/samples/wisprs-reviewer-sample.mp3 saved locally] Transcribe the recording I attached with Wisprs.",
+              "tools_triggered": "transcribe_file, get_job_status, get_transcript",
+              "expected_behavior": "ChatGPT passes the attachment to transcribe_file (declared through openai/fileParams) and may ask for confirmation first. Wisprs returns an operation receipt and renders the transcript component, which polls get_job_status and then shows the transcript inline with a copy button. The user is never sent to a web page; get_private_media_upload_handoff is only for files that are not attached."
             },
             {
               "description": "Search the connected library. Read-only, no confirmation.",
@@ -68,12 +75,6 @@
               "prompt": "Export my Wisprs transcript \"Podcast: remote work habits\" as an SRT subtitle file.",
               "tools_triggered": "search_library, export_transcript, get_job_status",
               "expected_behavior": "ChatGPT may ask for confirmation, then returns an https download link on wisprs.co (wisprs.co/api/mcp/exports/...) valid for about one hour. Opening it downloads an .srt file with numbered, timestamped cues covering the three remote-work tips."
-            },
-            {
-              "description": "Organize the library with two confirmed writes.",
-              "prompt": "In Wisprs, create a folder called \"Pricing decisions\" and move my \"Q4 pricing review\" transcript into it.",
-              "tools_triggered": "search_library, list_folders, create_folder, move_transcript_to_folder, get_job_status",
-              "expected_behavior": "ChatGPT may ask for confirmation before the writes, creates the \"Pricing decisions\" folder, moves the transcript into it, and confirms both."
             }
           ],
           "negative": [
@@ -93,7 +94,7 @@
         }
       },
       "publication": {
-        "release_notes": "First public submission of Wisprs for ChatGPT. Transcribe public audio and video links, follow progress, and read transcripts in pages. Search your library, summarize, split into chapters, repurpose, translate, and export (TXT, SRT, VTT, JSON, Markdown, DOCX) with a one-hour download link. Organize folders, share links, and manage transcripts. Actions that change data or start billable work are marked as such, so ChatGPT can confirm them with you first."
+        "release_notes": "0.30.0: the transcript stays in the conversation. New transcribe_file tool accepts a file attached to the chat (openai/fileParams), so private recordings no longer need a hand-off to the website. New inline transcript component (ui://wisprs/transcript-v2.html) shows progress, keeps checking long jobs, and renders the finished transcript with copy and load-more; transcribe_url, transcribe_file and get_transcript render it. get_job_status now holds its read open for up to 30 s and says plainly when a job is still running. Every tool has invoking/invoked status strings. New onboarding skill (skills/setup) for first run; the bundled wisprs skill is rewritten around the 23 tools ChatGPT lists. Starter prompt 2 now transcribes an attached recording. No auth or endpoint changes."
       }
     }
   }

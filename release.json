@@ -1,19 +1,19 @@
 {
-  "packageVersion": "0.28.3",
-  "releaseStatus": "pre-submission",
+  "packageVersion": "0.30.0",
+  "releaseStatus": "published",
   "publishedEvidence": [
     "2026-08-29-package-validation.md",
     "2026-08-29-public-repo-provenance.md",
     "2026-09-01-meeting-capture-write-verification.md"
   ],
-  "builtAt": "2026-10-03T16:34:09Z",
+  "builtAt": "2026-10-30T09:00:00Z",
   "server": {
     "endpoint": "https://wisprs.co/api/mcp",
     "claudeEndpoint": "https://wisprs.co/api/mcp/claude",
     "transport": "streamable-http",
     "authentication": "oauth-2.1",
-    "contractVersion": "1.16.0",
-    "contractSha256": "1069cfe513196223e5f74969d8919f5e3cb91c1f008615a359c6854bfae98bdf"
+    "contractVersion": "1.17.0",
+    "contractSha256": "c8b2f7dae47d60e017430f8ac2552417cf13abbe58bb98d3c088fa359b048683"
   },
   "supportedTools": [
     "transcribe_url",
@@ -60,6 +60,32 @@
     "repurpose_transcript",
     "translate_transcript"
   ],
+  "openaiSupportedTools": [
+    "transcribe_url",
+    "transcribe_file",
+    "get_private_media_upload_handoff",
+    "get_job_status",
+    "list_operations",
+    "get_transcript",
+    "get_transcript_artifact",
+    "get_transcription_metadata",
+    "list_transcripts",
+    "search_library",
+    "summarize_transcript",
+    "generate_chapters",
+    "repurpose_transcript",
+    "translate_transcript",
+    "export_transcript",
+    "list_folders",
+    "create_folder",
+    "move_transcript_to_folder",
+    "rename_transcript",
+    "create_share_link",
+    "revoke_share_link",
+    "get_usage_and_limits",
+    "retry_transcription"
+  ],
+  "openaiComponentResources": ["ui://wisprs/transcript-v2.html"],
   "claudeSupportedTools": [
     "transcribe_url",
     "get_private_media_upload_handoff",

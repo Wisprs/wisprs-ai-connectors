@@ -42,7 +42,12 @@ async function files(directory) {
   const result = [];
 
   for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (['.git', 'dist', 'node_modules'].includes(entry.name) || entry.name.endsWith('.zip'))
+    // .DS_Store: Finder writes it into any folder opened on macOS; it is untracked
+    // and was ending up in the submitted ZIP.
+    if (
+      ['.git', 'dist', 'node_modules', '.DS_Store'].includes(entry.name) ||
+      entry.name.endsWith('.zip')
+    )
       continue;
     const path = join(directory, entry.name);
 
