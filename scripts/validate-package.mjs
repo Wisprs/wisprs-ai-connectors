@@ -117,7 +117,9 @@ const REQUIRED_FILES = [
   '.claude-plugin/plugin.json',
   '.codex-plugin/plugin.json',
   '.github/workflows/validate.yml',
+  '.grok-plugin/plugin.json',
   '.mcp.json',
+  '.mcp-grok.json',
   '.mcp-openai.json',
   'CHANGELOG.md',
   'LICENSE',
@@ -183,6 +185,8 @@ export async function validatePackage() {
   const marketplace = await readJson('.claude-plugin/marketplace.json');
   const mcp = await readJson('.mcp.json');
   const openaiMcp = await readJson('.mcp-openai.json');
+  const grok = await readJson('.grok-plugin/plugin.json');
+  const grokMcp = await readJson('.mcp-grok.json');
   const release = await readJson('release.json');
   const packageJson = await readJson('package.json');
   const skill = await readFile(join(ROOT, 'skills/wisprs/SKILL.md'), 'utf8');
@@ -198,6 +202,7 @@ export async function validatePackage() {
   const versions = [
     codex.version,
     claude.version,
+    grok.version,
     marketplace.version,
     release.packageVersion,
     packageJson.version,
@@ -234,6 +239,23 @@ export async function validatePackage() {
   invariant(
     claude.mcpServers === './.mcp.json',
     'Claude manifest must reference .mcp.json',
+    errors
+  );
+
+  // Grok Build reads .grok-plugin/plugin.json before .claude-plugin/plugin.json and honours a
+  // string mcpServers path, so Grok gets the universal endpoint while Claude keeps its own surface.
+  invariant(
+    grok.mcpServers === './.mcp-grok.json',
+    'Grok manifest must reference .mcp-grok.json',
+    errors
+  );
+  const grokServer = grokMcp.mcpServers?.wisprs;
+  invariant(
+    grokServer?.type === 'http' &&
+      grokServer?.url === ENDPOINT &&
+      Object.keys(grokMcp.mcpServers ?? {}).length === 1 &&
+      Object.keys(grokServer).every((key) => ['type', 'url'].includes(key)),
+    'Grok config must contain only the canonical HTTPS endpoint',
     errors
   );
 
