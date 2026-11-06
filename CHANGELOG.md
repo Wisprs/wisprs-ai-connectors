@@ -6,6 +6,12 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.30.2] - 2026-11-06
+
+### Changed
+
+- Claude listing icon now uses the current Wisprs mark (wavy gradient W on a dark tile, 512x512). The four-bar mark it replaced was retired on 2026-10-13.
+
 ## [0.30.1] - 2026-11-06
 
 ### Changed
