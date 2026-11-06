@@ -14,7 +14,7 @@ Then run `/mcp` once to sign in to Wisprs in your browser.
 
 ## What you can ask for
 
-- "Transcribe this episode: https://example.com/episode.mp3"
+- Transcribe this sample podcast with Wisprs: https://wisprs.co/samples/wisprs-sample-remote-work-podcast.mp3
 - "Search my Wisprs library for where we talked about pricing."
 - "Summarize my last meeting transcript and list the action items."
 - "Give me chapters for that recording, then a blog post draft."
