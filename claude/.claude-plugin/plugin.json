@@ -2,7 +2,7 @@
   "name": "wisprs-ai-connectors",
   "displayName": "Wisprs",
   "description": "Speech-to-text transcription, transcript search and library management, summaries, exports, translations, and creator content with Wisprs.",
-  "version": "0.30.1",
+  "version": "0.30.2",
   "author": {
     "name": "Wisprs",
     "email": "tosh@getwisprs.com",
