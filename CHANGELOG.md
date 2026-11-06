@@ -6,6 +6,16 @@ All notable package changes are documented here. Versions follow Semantic Versio
 
 - Platform review, production compatibility certification, and signed release tag remain gated.
 
+## [0.30.1] - 2026-11-06
+
+### Changed
+
+- The Claude plugin moved to its own folder, `claude/`, holding only `.claude-plugin/plugin.json`, `.mcp.json`, `skills/`, `assets/icon.png`, a Claude-specific `README.md` and `LICENSE`. It is submitted to the Claude directory with plugin path `claude`. The root marketplace entry now uses `source: "./claude"`. The Claude directory scans every file under a plugin's root, so the release scripts, CI, evidence docs, lockfile and the Codex/Grok assets no longer sit inside it. No endpoint, auth or tool changes.
+- `plugin.json` now sets `icon` for the directory listing.
+- Removed the empty `package-lock.json` (the release tooling has no dependencies); CI no longer uses the npm cache.
+- The validator checks that `claude/` contains exactly those files and that its skills and license match the root copies.
+- Docs no longer write image paths in backticks; the provenance evidence is reworded so it no longer reads as credential handling.
+
 ## [0.30.0] - 2026-10-30
 
 ### Added

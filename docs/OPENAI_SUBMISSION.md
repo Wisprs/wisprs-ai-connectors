@@ -21,7 +21,7 @@ OpenAI publishes one universal plugin entry shared by ChatGPT and Codex. This pa
 5. Add `"apps": "./.app.json"` to the release-candidate Codex manifest and rerun validation.
 6. Install from the private source and run every case in `REVIEWER_GUIDE.md` in both ChatGPT and Codex.
 
-The source package uses `.mcp-openai.json` for `https://wisprs.co/api/mcp`. Since 0.29.x the server recognises ChatGPT and Codex by their user agent and lists them a lean 23-tool set (`release.json` `openaiSupportedTools`: transcription, library, transform, export, folders, share; no TTS, webhooks, meetings, support, notifications or creator packs). ChatGPT alone also sees `transcribe_file` (attached files through `openai/fileParams`) and the inline transcript component `ui://wisprs/transcript-v2.html`. Claude uses `.mcp.json` and its separately constrained endpoint. The OpenAI portal receives the MCP server as a fresh server-backed plugin submission.
+The source package uses `.mcp-openai.json` for `https://wisprs.co/api/mcp`. Since 0.29.x the server recognises ChatGPT and Codex by their user agent and lists them a lean 23-tool set (`release.json` `openaiSupportedTools`: transcription, library, transform, export, folders, share; no TTS, webhooks, meetings, support, notifications or creator packs). ChatGPT alone also sees `transcribe_file` (attached files through `openai/fileParams`) and the inline transcript component `ui://wisprs/transcript-v2.html`. Claude uses `claude/.mcp.json` and its separately constrained endpoint. The OpenAI portal receives the MCP server as a fresh server-backed plugin submission.
 
 ## Listing materials
 
@@ -34,8 +34,8 @@ The source package uses `.mcp-openai.json` for `https://wisprs.co/api/mcp`. Sinc
 - Privacy: `https://wisprs.co/privacy`
 - Terms: `https://wisprs.co/terms`
 - MCP server: `https://wisprs.co/api/mcp`
-- Logo: `assets/wisprs-logo.png` (512×512 PNG)
-- Composer icon: `assets/wisprs-icon.png` (128×128 PNG)
+- Logo: assets/wisprs-logo.png (512×512 PNG)
+- Composer icon: assets/wisprs-icon.png (128×128 PNG)
 - Starter prompts: the three prompts in `.codex-plugin/plugin.json`
 
 ## Portal sequence

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import test from 'node:test';
 
@@ -10,7 +10,7 @@ test('distribution package satisfies release invariants', async () => {
 });
 
 test('MCP configuration contains no static authorization material', async () => {
-  const mcp = JSON.parse(await readFile(join(ROOT, '.mcp.json'), 'utf8'));
+  const mcp = JSON.parse(await readFile(join(ROOT, 'claude/.mcp.json'), 'utf8'));
   assert.deepEqual(mcp, {
     mcpServers: {
       wisprs: {
@@ -22,7 +22,7 @@ test('MCP configuration contains no static authorization material', async () => 
 });
 
 test('Claude listing copy is explicitly speech-to-text focused', async () => {
-  const claude = JSON.parse(await readFile(join(ROOT, '.claude-plugin/plugin.json'), 'utf8'));
+  const claude = JSON.parse(await readFile(join(ROOT, 'claude/.claude-plugin/plugin.json'), 'utf8'));
   const marketplace = JSON.parse(await readFile(join(ROOT, '.claude-plugin/marketplace.json'), 'utf8'));
   const description = claude.description;
   assert.equal(description, marketplace.plugins[0].description);
@@ -54,4 +54,10 @@ test('skill limits command retries and transcript pagination', async () => {
   assert.match(skill, /wait at least `retryAfterSeconds`/);
   assert.match(skill, /Never edit, decode, or reuse a cursor/);
   assert.match(skill, /untrusted data/);
+});
+
+test('Claude plugin directory ships no scripts, lockfiles, or package manifests', async () => {
+  for (const entry of await readdir(join(ROOT, 'claude'), { recursive: true })) {
+    assert.doesNotMatch(entry, /package(-lock)?\.json$|\.(m?js|cjs|ts|sh|py)$/, entry);
+  }
 });

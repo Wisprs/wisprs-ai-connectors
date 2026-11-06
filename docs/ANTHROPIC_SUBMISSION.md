@@ -7,8 +7,8 @@ The current Claude developer portal accepts separate remote MCP connector and Gi
 ## Claude Code community plugin
 
 1. Publish this package to the public repository `Wisprs/wisprs-ai-connectors` after repository security review.
-2. Run `claude plugin validate --strict .` with the minimum supported Claude Code version and current stable version.
-3. Load locally with `claude --plugin-dir .`, run Claude Code's `/mcp` command to complete OAuth, and execute every reviewer case.
+2. Run `claude plugin validate --strict --profile directory ./claude` with the minimum supported Claude Code version and current stable version.
+3. Load locally with `claude --plugin-dir ./claude`, run Claude Code's `/mcp` command to complete OAuth, and execute every reviewer case.
 4. Add the repository as a local marketplace and install `wisprs-ai-connectors@wisprs-plugins`; repeat install, reload, update, and uninstall tests.
 5. Submit the public repository as a plugin bundle through `https://claude.ai/directory/manage`; the older Console form is no longer supported.
 6. Record the submitted commit SHA. Approved community listings are pinned to a commit, so every update requires a manifest version bump and passing CI at the new commit.
@@ -28,8 +28,9 @@ Policy gate: verify that tool discovery exposes exactly the 39 reviewed non-TTS 
 
 - Publicly readable source and immutable release tag.
 - No private application code, credentials, customer data, or hidden download/install behavior.
-- `.claude-plugin/plugin.json` at plugin root, with other components outside that directory.
-- `.mcp.json` using `type: http` and an HTTPS URL.
+- The Claude plugin root is `claude/`: `claude/.claude-plugin/plugin.json`, `claude/.mcp.json` (`type: http`, HTTPS URL, OAuth through the host, no env or headers), `claude/skills/`, `claude/assets/icon.png`, `claude/README.md` (the listing description) and `claude/LICENSE`. Nothing executable, no package manifest or lockfile. The directory scans every file under the plugin root, so release tooling, CI, evidence and other hosts' manifests stay at the repository root.
+- The root `.claude-plugin/marketplace.json` lists the plugin with `source: "./claude"`.
+- Directory submission: repository `Wisprs/wisprs-ai-connectors`, plugin path `claude`. The October 2026 root-path submission is withdrawn in favour of it.
 - Provider-neutral skill in `skills/wisprs/SKILL.md`.
 - README, license, security policy, privacy explanation, changelog, reviewer guide, and provenance.
 

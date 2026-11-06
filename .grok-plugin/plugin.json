@@ -1,6 +1,6 @@
 {
   "name": "wisprs",
-  "version": "0.30.0",
+  "version": "0.30.1",
   "description": "Transcribe audio, video and YouTube links from Grok Build, then search, summarize, translate and export transcripts through Wisprs' hosted OAuth MCP server.",
   "author": {
     "name": "Wisprs",

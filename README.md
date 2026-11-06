@@ -31,7 +31,7 @@ The server owns authentication, authorization, tenant isolation, idempotency, ra
 Test a local checkout:
 
 ```bash
-claude --plugin-dir ./wisprs-ai-connectors
+claude --plugin-dir ./wisprs-ai-connectors/claude
 ```
 
 Or add this repository as a marketplace:
@@ -51,7 +51,7 @@ The `.codex-plugin/plugin.json` manifest uses `.mcp-openai.json` and the univers
 
 ## Direct MCP configuration
 
-Claude hosts use the checked-in `.mcp.json`. Other hosts can use `.mcp-openai.json` for the universal endpoint. Each endpoint returns OAuth protected-resource metadata and drives browser authorization. Static bearer tokens are neither required nor accepted in this package.
+Claude hosts use `claude/.mcp.json` (the Claude plugin lives in `claude/`, which holds only its manifest, MCP config, skills and icon). Other hosts can use `.mcp-openai.json` for the universal endpoint. Each endpoint returns OAuth protected-resource metadata and drives browser authorization. Static bearer tokens are neither required nor accepted in this package.
 
 ## Correct asynchronous usage
 
