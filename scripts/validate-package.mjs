@@ -111,14 +111,27 @@ const SUPPORTED_TOOLS = [
   'translate_transcript',
 ];
 
-const REQUIRED_FILES = [
-  '.claude-plugin/icon.png',
-  '.claude-plugin/marketplace.json',
+// The Claude plugin is its own directory: the directory scan reads every file
+// under the plugin root, so release tooling, CI, evidence and the other hosts'
+// manifests must stay outside it. This is the complete list of what ships there.
+const CLAUDE_PLUGIN_DIR = 'claude';
+
+const CLAUDE_PLUGIN_FILES = [
   '.claude-plugin/plugin.json',
+  '.mcp.json',
+  'LICENSE',
+  'README.md',
+  'assets/icon.png',
+  'skills/setup/SKILL.md',
+  'skills/wisprs/SKILL.md',
+];
+
+const REQUIRED_FILES = [
+  ...CLAUDE_PLUGIN_FILES.map((file) => `${CLAUDE_PLUGIN_DIR}/${file}`),
+  '.claude-plugin/marketplace.json',
   '.codex-plugin/plugin.json',
   '.github/workflows/validate.yml',
   '.grok-plugin/plugin.json',
-  '.mcp.json',
   '.mcp-grok.json',
   '.mcp-openai.json',
   'CHANGELOG.md',
@@ -135,7 +148,6 @@ const REQUIRED_FILES = [
   'docs/RELEASE_PROCESS.md',
   'docs/SUBMISSION_GATES.md',
   'package.json',
-  'package-lock.json',
   'release.json',
   'skills/wisprs/SKILL.md',
 ];
@@ -181,15 +193,48 @@ async function walk(directory = ROOT) {
 export async function validatePackage() {
   const errors = [];
   const codex = await readJson('.codex-plugin/plugin.json');
-  const claude = await readJson('.claude-plugin/plugin.json');
+  const claude = await readJson(`${CLAUDE_PLUGIN_DIR}/.claude-plugin/plugin.json`);
   const marketplace = await readJson('.claude-plugin/marketplace.json');
-  const mcp = await readJson('.mcp.json');
+  const mcp = await readJson(`${CLAUDE_PLUGIN_DIR}/.mcp.json`);
   const openaiMcp = await readJson('.mcp-openai.json');
   const grok = await readJson('.grok-plugin/plugin.json');
   const grokMcp = await readJson('.mcp-grok.json');
   const release = await readJson('release.json');
   const packageJson = await readJson('package.json');
   const skill = await readFile(join(ROOT, 'skills/wisprs/SKILL.md'), 'utf8');
+
+  // The Claude plugin carries copies of the shared skills and license; they must not drift.
+  for (const name of ['skills/wisprs/SKILL.md', 'skills/setup/SKILL.md', 'LICENSE']) {
+    const shared = await readFile(join(ROOT, name), 'utf8');
+    const copy = await readFile(join(ROOT, CLAUDE_PLUGIN_DIR, name), 'utf8');
+    invariant(
+      copy === shared,
+      `${CLAUDE_PLUGIN_DIR}/${name} differs from ${name}`,
+      errors
+    );
+  }
+
+  const claudeFiles = (await walk(join(ROOT, CLAUDE_PLUGIN_DIR))).map((path) =>
+    relative(join(ROOT, CLAUDE_PLUGIN_DIR), path).split(sep).join('/')
+  );
+  invariant(
+    JSON.stringify(claudeFiles) === JSON.stringify([...CLAUDE_PLUGIN_FILES].sort()),
+    `${CLAUDE_PLUGIN_DIR}/ must contain exactly: ${CLAUDE_PLUGIN_FILES.join(', ')}`,
+    errors
+  );
+  invariant(
+    claude.icon === './assets/icon.png',
+    'Claude manifest icon must be ./assets/icon.png',
+    errors
+  );
+
+  for (const key of ['documentationUrl', 'supportUrl', 'privacyPolicyUrl', 'termsOfServiceUrl']) {
+    invariant(
+      claude[key]?.startsWith('https://wisprs.co/'),
+      `Claude manifest ${key} must be a wisprs.co https URL`,
+      errors
+    );
+  }
 
   for (const file of REQUIRED_FILES) {
     try {
@@ -227,8 +272,8 @@ export async function validatePackage() {
     errors
   );
   invariant(
-    marketplace.plugins?.[0]?.source === './',
-    'marketplace source must be package root',
+    marketplace.plugins?.[0]?.source === `./${CLAUDE_PLUGIN_DIR}`,
+    `marketplace source must be ./${CLAUDE_PLUGIN_DIR}`,
     errors
   );
   invariant(
@@ -386,6 +431,12 @@ export async function validatePackage() {
 
   const icon = await pngDimensions('assets/wisprs-icon.png');
   const logo = await pngDimensions('assets/wisprs-logo.png');
+  const claudeIcon = await pngDimensions(`${CLAUDE_PLUGIN_DIR}/assets/icon.png`);
+  invariant(
+    claudeIcon.width === 512 && claudeIcon.height === 512,
+    'Claude icon must be 512x512',
+    errors
+  );
   invariant(icon.width === 128 && icon.height === 128, 'composer icon must be 128x128', errors);
   invariant(logo.width === 512 && logo.height === 512, 'logo must be 512x512', errors);
 

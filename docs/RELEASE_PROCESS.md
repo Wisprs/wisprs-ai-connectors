@@ -2,7 +2,7 @@
 
 ## Versioning
 
-Use Semantic Versioning. Keep `package.json`, `release.json`, `.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `CHANGELOG.md` synchronized.
+Use Semantic Versioning. Keep `package.json`, `release.json`, `.codex-plugin/plugin.json`, `claude/.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `CHANGELOG.md` synchronized.
 
 ## Build
 
